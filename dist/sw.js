@@ -1,5 +1,5 @@
-const CACHE = 'rezapp-shell-v8';
-const SHELL = ['./','./index.html','./styles.css','./manifest.json','./assets/icon.svg','./assets/placeholder.svg','./src/app.js?v=1.1.0','./src/storage/indexedDb.js','./src/models/recipe.js','./src/components/icons.js','./src/components/editor.js','./src/utils/ingredients.js','./src/utils/image.js','./src/services/recipeImportService.js?v=1.1.0','./src/services/bringService.js'];
+const CACHE = 'rezapp-shell-v9';
+const SHELL = ['./','./index.html','./styles.css','./manifest.json','./assets/icon.svg','./assets/placeholder.svg','./src/app.js?v=1.2.0','./src/storage/indexedDb.js','./src/models/recipe.js','./src/components/icons.js','./src/components/editor.js','./src/utils/ingredients.js','./src/utils/image.js','./src/services/recipeImportService.js?v=1.1.0','./src/services/bringService.js?v=1.2.0'];
 self.addEventListener('install', event => event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL)).then(()=>self.skipWaiting())));
 self.addEventListener('activate', event => event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch', event => {

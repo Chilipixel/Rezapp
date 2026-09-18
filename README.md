@@ -20,6 +20,8 @@ Danach `http://localhost:4173` öffnen.
 
 Der Workflow `.github/workflows/deploy-pages.yml` veröffentlicht den Inhalt von `dist` bei jedem Push auf `main`. In den Repository-Einstellungen unter **Pages → Build and deployment** als Quelle **GitHub Actions** auswählen.
 
-## Datenschutz und Bring!
+## Bring!-Übergabe
 
-Es gibt keinen Backend-Server und keine Zugangsdaten im Repository. Bring! stellt keine offizielle öffentliche Browser-API bereit. Deshalb ist die Integration in `dist/src/services/bringService.js` gekapselt und nutzt derzeit das native Teilen-Menü beziehungsweise die Zwischenablage; ein direkter Login-Test erklärt die Browser-/CORS-Einschränkung. Lokal eingegebene Bring!-Daten werden wie gewünscht nur in IndexedDB gespeichert und sind im JSON-Backup enthalten.
+Es gibt keinen Backend-Server und keine Zugangsdaten im Repository. Ausgewählte Zutaten werden über das native Teilen-Menü an die Bring!-App übergeben; falls das Gerät dies nicht unterstützt, kopiert Rezapp die formatierte Einkaufsliste. Für importierte Rezepte mit öffentlicher Quell-URL verwendet die App zusätzlich den offiziellen Bring!-Rezept-Deep-Link mit der ausgewählten Portionszahl.
+
+Eine direkte Anmeldung und Veränderung einer persönlichen Bring!-Liste ist aus einer reinen GitHub-Pages-App nicht möglich: Bring! bietet dafür keine öffentliche Shopping-List-API und blockiert Aufrufe der inoffiziellen Konto-API per CORS. Rezapp fordert deshalb keine Bring!-Zugangsdaten mehr an.
