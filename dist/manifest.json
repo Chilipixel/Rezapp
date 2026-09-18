@@ -1,0 +1,18 @@
+{
+  "name": "Rezapp – Meine Rezepte",
+  "short_name": "Rezapp",
+  "description": "Private, offline-fähige Rezeptbibliothek und Einkaufsliste",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f1e8",
+  "theme_color": "#f5f1e8",
+  "lang": "de",
+  "icons": [
+    { "src": "./assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Neues Rezept", "url": "./#new", "icons": [{ "src": "./assets/icon.svg", "sizes": "any", "type": "image/svg+xml" }] },
+    { "name": "Einkauf", "url": "./#shopping", "icons": [{ "src": "./assets/icon.svg", "sizes": "any", "type": "image/svg+xml" }] }
+  ]
+}
