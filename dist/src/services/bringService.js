@@ -5,6 +5,24 @@ function itemText(item) {
   return `${item.amount ?? ''} ${item.unit || ''} ${item.name || ''}`.replace(/\s+/g, ' ').trim();
 }
 
+async function copyText(text) {
+  if (navigator.clipboard?.writeText && window.isSecureContext) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+
+  const field = document.createElement('textarea');
+  field.value = text;
+  field.setAttribute('readonly', '');
+  field.style.position = 'fixed';
+  field.style.opacity = '0';
+  document.body.append(field);
+  field.select();
+  const copied = document.execCommand('copy');
+  field.remove();
+  if (!copied) throw new Error('Die Einkaufsliste konnte auf diesem Gerät nicht kopiert werden.');
+}
+
 export const bringService = {
   webUrl: BRING_WEB_URL,
 
@@ -19,22 +37,17 @@ export const bringService = {
   },
 
   async testConnection() {
-    if (navigator.share) return 'Die Übergabe an die Bring!-App ist auf diesem Gerät verfügbar.';
-    if (navigator.clipboard?.writeText) return 'Die Einkaufsliste kann kopiert und anschließend in Bring! eingefügt werden.';
-    throw new Error('Dieses Gerät unterstützt weder Teilen noch Kopieren. Öffne Bring! Web und übertrage die Liste manuell.');
+    if ((navigator.clipboard?.writeText && window.isSecureContext) || document.queryCommandSupported?.('copy')) {
+      return 'Kopieren ist verfügbar. Öffentliche Rezeptlinks können außerdem direkt in Bring! geöffnet werden.';
+    }
+    throw new Error('Dieses Gerät unterstützt das Kopieren nicht. Öffne Bring! Web und übertrage die Liste manuell.');
   },
 
-  async send(items) {
+  async copyItems(items) {
     const available = (items || []).filter((item) => item?.name?.trim());
     if (!available.length) throw new Error('Wähle mindestens eine Zutat aus.');
     const text = available.map(itemText).join('\n');
-    const shareData = { title: 'Rezapp – Einkaufsliste', text };
-    if (navigator.share && (!navigator.canShare || navigator.canShare(shareData))) {
-      await navigator.share(shareData);
-      return 'Die Einkaufsliste wurde an das Teilen-Menü übergeben. Wähle dort Bring! aus.';
-    }
-    if (!navigator.clipboard?.writeText) throw new Error('Die Einkaufsliste konnte auf diesem Gerät nicht übergeben werden.');
-    await navigator.clipboard.writeText(text);
+    await copyText(text);
     return 'Die Einkaufsliste wurde kopiert. Öffne Bring! und füge sie dort ein.';
   }
 };

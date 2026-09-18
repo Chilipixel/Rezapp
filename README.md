@@ -22,6 +22,8 @@ Der Workflow `.github/workflows/deploy-pages.yml` veröffentlicht den Inhalt von
 
 ## Bring!-Übergabe
 
-Es gibt keinen Backend-Server und keine Zugangsdaten im Repository. Ausgewählte Zutaten werden über das native Teilen-Menü an die Bring!-App übergeben; falls das Gerät dies nicht unterstützt, kopiert Rezapp die formatierte Einkaufsliste. Für importierte Rezepte mit öffentlicher Quell-URL verwendet die App zusätzlich den offiziellen Bring!-Rezept-Deep-Link mit der ausgewählten Portionszahl.
+Es gibt keinen Backend-Server und keine Zugangsdaten im Repository. Für importierte Rezepte mit öffentlicher Quell-URL verwendet die App den offiziellen Bring!-Rezept-Deep-Link mit der ausgewählten Portionszahl. Eigene oder ausgewählte Zutaten kopiert Rezapp formatiert in die Zwischenablage, damit sie anschließend in Bring! eingefügt werden können.
+
+Das native Teilen-Menü wird bewusst nicht verwendet: Die Bring!-Share-Erweiterung erwartet dort einen Rezeptlink und meldet bei reinem Zutatentext `could not detect recipe link in text`.
 
 Eine direkte Anmeldung und Veränderung einer persönlichen Bring!-Liste ist aus einer reinen GitHub-Pages-App nicht möglich: Bring! bietet dafür keine öffentliche Shopping-List-API und blockiert Aufrufe der inoffiziellen Konto-API per CORS. Rezapp fordert deshalb keine Bring!-Zugangsdaten mehr an.
